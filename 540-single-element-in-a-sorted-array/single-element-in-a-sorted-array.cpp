@@ -1,27 +1,14 @@
 class Solution {
 public:
     int singleNonDuplicate(vector<int>& nums) {
-        int low = 0;
-        int high = nums.size() - 1;
+        int n = nums.size();
 
-        while (low < high) {
-            int mid = low + (high - low) / 2;
-
-            // Make mid even
-            if (mid % 2 == 1) {
-                mid--;
-            }
-
-            // Pair is correct: single element is on the right
-            if (nums[mid] == nums[mid + 1]) {
-                low = mid + 2;
-            }
-            // Pair is broken: single element is on the left
-            else {
-                high = mid;
+        for (int i = 0; i < n - 1; i += 2) {
+            if (nums[i] != nums[i + 1]) {
+                return nums[i];
             }
         }
 
-        return nums[low];
+        return nums[n - 1];
     }
 };

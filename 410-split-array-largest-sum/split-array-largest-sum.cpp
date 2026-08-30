@@ -1,41 +1,44 @@
 class Solution {
 public:
-    int countSubarrays(vector<int>& nums, long long maxSum) {
-        int subarrays = 1;
-        long long sum = 0;
 
-        for (int num : nums) {
-            if (sum + num > maxSum) {
-                subarrays++;
-                sum = num;
-            } else {
-                sum += num;
+    int countsubarray(vector<int>& nums, int subarray){
+        int panters = 1; long long time = 0;
+        for(int i = 0; i <= nums.size() - 1; i++){
+            if(time + nums[i] <= subarray){
+                time = time + nums[i];
+            }
+
+            else{
+                panters++;
+                time = nums[i];
             }
         }
-
-        return subarrays;
+        return panters;
     }
-
     int splitArray(vector<int>& nums, int k) {
-        long long low = *max_element(nums.begin(), nums.end());
-        long long high = 0;
-
-        for (int num : nums) {
-            high += num;
+        int ans = -1;
+        int n = nums.size();
+        if(k > n){
+            return -1;
         }
 
-        while (low <= high) {
-            long long mid = low + (high - low) / 2;
+        long low = *max_element(nums.begin(), nums.end());
+        long high = 0;
+        for(int i = 0; i < n; i++){
+            high = high + nums[i];
+        }
 
-            int requiredSubarrays = countSubarrays(nums, mid);
-
-            if (requiredSubarrays <= k) {
+        while(low <= high){
+            long long mid = low + (high - low)/2;
+            int cntsubarray = countsubarray(nums, mid);
+            if(cntsubarray <= k){
+                ans = mid;
                 high = mid - 1;
-            } else {
+            }
+            else{
                 low = mid + 1;
             }
         }
-
-        return low;
+        return ans;
     }
 };

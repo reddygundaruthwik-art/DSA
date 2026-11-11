@@ -7,35 +7,32 @@ public:
 
         sort(nums.begin(), nums.end());
 
-        for(int i = 0; i < n-2; i++) {
+        for( int i = 0; i < n-2; i++){
+            int j = i + 1;
+            int k = n - 1;
 
-            int j = i+1;
-            int k = n-1;
-
-            while(j < k) {
-
+            while(j < k){
                 int sum = nums[i] + nums[j] + nums[k];
 
-                if(sum == 0) {
-                    vector<int> temp = {
-                        nums[i], nums[j], nums[k]
-                    };
-
+                if(sum == 0){
+                    vector<int> temp = {nums[i], nums[j], nums[k]};
                     st.insert(temp);
+                  sort(temp.begin(), temp.end());
+                  j++;
+                  k--;
+                }
+                
 
-                    j++;
-                    k--;
-                }
-                else if(sum < 0) {
+                else if(sum < 0){
                     j++;
                 }
-                else {
+
+                else{
                     k--;
                 }
             }
         }
-
-        vector<vector<int>> ans(st.begin(), st.end());
+        vector<vector<int>> ans = {st.begin(), st.end()};
         return ans;
     }
 };
